@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table-Printer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .video-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+        .form-container {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            margin: 0 auto;
+            overflow-y: auto; 
+        }
+        .form-container h1 {
+            margin-bottom: 20px;
+        }
+        .form-container input,
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        .form-container button {
+            background-color: #0a84d6;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 800;
+        }
+        .form-container button:hover {
+            background-color: #466479;
+        }
+        .output {
+            margin-top: 20px;
+            color: white;
+            text-align: center;
+            max-height: 50vh; 
+            overflow-y: auto; 
+        }
+        .output table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 300px;
+        }
+        .output th, .output td {
+            border: 1px solid white;
+            padding: 8px;
+            text-align: center;
+        }
+        .output th {
+            background-color: #0a84d6;
+        }
+        .output td {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video autoplay muted loop class="background-video">
+            <source src="./canva-uiD52nQKias.mp4" type="video/mp4">
+        </video>
+        <div class="form-container">
+            <h1>Table Printer</h1>
+            <form id="tableForm" action="#">
+                <input id="number" type="number" placeholder="Enter number for table" required>
+                <input id="Start" type="number" placeholder="Start From" required>
+                <input id="end" type="number" placeholder="End At" required>
+                <button type="submit">Print Table</button>
+            </form>
+            <div class="output" id="output"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('tableForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            printtable();
+        });
+
+        function printtable() {
+            const table = parseInt(document.getElementById('number').value);
+            const start = parseInt(document.getElementById('Start').value);
+            const end = parseInt(document.getElementById('end').value);
+            const output = document.getElementById('output');
+
+            output.innerHTML = ""; 
+
+            var table_element = document.createElement('table');
+            var header_row = table_element.insertRow();
+            header_row.insertCell().textContent = "Multiplication";
+            header_row.insertCell().textContent = "Result";
+
+            for (var i = start; i <= end; i++) {
+                var row = table_element.insertRow();
+                row.insertCell().textContent = table + " x " + i;
+                row.insertCell().textContent = table * i;
+            }
+
+            output.appendChild(table_element);
+        }
+    </script>
+</body>
+</html>
